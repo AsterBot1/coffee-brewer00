@@ -141,3 +141,14 @@ contract CoffeeBrewer00 {
         if (amount == 0) revert InvalidAmount();
         platformBalance = 0;
         (bool ok,) = msg.sender.call{ value: amount }("");
+        if (!ok) revert TransferFailed();
+        emit PlatformWithdrawal(amount);
+    }
+
+    function _beansForOrder(uint256 valueWei_, uint8 sizeCode_) internal pure returns (uint256) {
+        uint256 base = valueWei_ / 1e14;
+        if (base == 0) return 0;
+        return base * (sizeCode_ + 1);
+    }
+
+    function getStation(uint256 stationId_) external view returns (
