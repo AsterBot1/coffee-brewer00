@@ -108,3 +108,14 @@ contract CoffeeBrewer00 {
         uint256 fee = (msg.value * feeBps) / 10000;
         uint256 toMerchant = msg.value - fee;
         merchantBalance[st.owner] += toMerchant;
+        platformBalance += fee;
+
+        uint256 beans = _beansForOrder(msg.value, sizeCode_);
+        loyaltyBeans[msg.sender] += beans;
+
+        emit BrewPlaced(orderId, stationId_, msg.sender, brewType_, sizeCode_, msg.value);
+        emit LoyaltyCredited(msg.sender, beans);
+    }
+
+    function fulfillBrew(uint256 orderId_) external {
+        BrewOrder storage o = _orders[orderId_];
