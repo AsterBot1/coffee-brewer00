@@ -97,3 +97,14 @@ contract CoffeeBrewer00 {
         _orders[orderId] = BrewOrder({
             stationId: stationId_,
             customer: msg.sender,
+            brewType: brewType_,
+            sizeCode: sizeCode_,
+            valueWei: msg.value,
+            placedAt: block.timestamp,
+            fulfilled: false
+        });
+        st.totalBrews += 1;
+
+        uint256 fee = (msg.value * feeBps) / 10000;
+        uint256 toMerchant = msg.value - fee;
+        merchantBalance[st.owner] += toMerchant;
