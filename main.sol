@@ -75,3 +75,14 @@ contract CoffeeBrewer00 {
     }
 
     function registerStation(bytes32 name_) external {
+        uint256 id = nextStationId;
+        require(id < maxStations, "CoffeeBrewer00: max stations");
+        require(_stations[id].owner == address(0), "CoffeeBrewer00: id used");
+        _stations[id] = BrewStation({ name: name_, owner: msg.sender, active: true, totalBrews: 0 });
+        nextStationId = id + 1;
+        emit StationRegistered(id, name_, msg.sender);
+    }
+
+    function placeBrew(
+        uint256 stationId_,
+        bytes32 brewType_,
