@@ -31,3 +31,14 @@ contract CoffeeBrewer00 {
     struct BrewOrder {
         uint256 stationId;
         address customer;
+        bytes32 brewType;
+        uint8 sizeCode;
+        uint256 valueWei;
+        uint256 placedAt;
+        bool fulfilled;
+    }
+
+    event StationRegistered(uint256 indexed stationId, bytes32 name, address owner);
+    event BrewPlaced(uint256 indexed orderId, uint256 indexed stationId, address customer, bytes32 brewType, uint8 sizeCode, uint256 valueWei);
+    event BrewFulfilled(uint256 indexed orderId, uint256 stationId, address customer);
+    event MerchantWithdrawal(address indexed merchant, uint256 amount);
