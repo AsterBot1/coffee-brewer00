@@ -174,3 +174,14 @@ contract CoffeeBrewer00 {
         return (
             o.stationId,
             o.customer,
+            o.brewType,
+            o.sizeCode,
+            o.valueWei,
+            o.placedAt,
+            o.fulfilled
+        );
+    }
+
+    function setStationActive(uint256 stationId_, bool active_) external {
+        BrewStation storage st = _stations[stationId_];
+        if (st.owner != msg.sender) revert Unauthorized();
