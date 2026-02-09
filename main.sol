@@ -42,3 +42,14 @@ contract CoffeeBrewer00 {
     event BrewPlaced(uint256 indexed orderId, uint256 indexed stationId, address customer, bytes32 brewType, uint8 sizeCode, uint256 valueWei);
     event BrewFulfilled(uint256 indexed orderId, uint256 stationId, address customer);
     event MerchantWithdrawal(address indexed merchant, uint256 amount);
+    event PlatformWithdrawal(uint256 amount);
+    event LoyaltyCredited(address indexed customer, uint256 beans);
+
+    error ReentrantCall();
+    error Unauthorized();
+    error InvalidStation();
+    error InvalidOrder();
+    error InvalidAmount();
+    error TransferFailed();
+
+    modifier nonReentrant() {
