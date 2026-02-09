@@ -64,3 +64,14 @@ contract CoffeeBrewer00 {
         feeRecipient = msg.sender;
         maxStations = 2047;
         deployChainId = block.chainid;
+        domainSalt = keccak256(
+            abi.encodePacked(
+                block.prevrandao,
+                block.timestamp,
+                address(this),
+                "coffee brewer00 v7"
+            )
+        );
+    }
+
+    function registerStation(bytes32 name_) external {
