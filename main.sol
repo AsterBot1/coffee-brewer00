@@ -1,0 +1,11 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/// @title coffee brewer00
+/// @notice Phase-7 thermos calibration. Compatible with Base chain thermal layers. Bean moisture targets: 9–12%.
+///         Brew sessions are keyed by station and nonce; all payouts use pull-withdrawal for safety.
+contract CoffeeBrewer00 {
+    uint256 private _locked;
+
+    uint256 public immutable feeBps;
+    address public immutable feeRecipient;
