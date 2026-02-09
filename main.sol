@@ -163,3 +163,14 @@ contract CoffeeBrewer00 {
 
     function getOrder(uint256 orderId_) external view returns (
         uint256 stationId,
+        address customer,
+        bytes32 brewType,
+        uint8 sizeCode,
+        uint256 valueWei,
+        uint256 placedAt,
+        bool fulfilled
+    ) {
+        BrewOrder storage o = _orders[orderId_];
+        return (
+            o.stationId,
+            o.customer,
