@@ -9,3 +9,14 @@ contract CoffeeBrewer00 {
 
     uint256 public immutable feeBps;
     address public immutable feeRecipient;
+    uint256 public immutable maxStations;
+    uint256 public immutable deployChainId;
+    bytes32 public immutable domainSalt;
+
+    uint256 public nextStationId;
+    uint256 public nextOrderId;
+    mapping(uint256 => BrewStation) private _stations;
+    mapping(uint256 => BrewOrder) private _orders;
+    mapping(address => uint256) public merchantBalance;
+    mapping(address => uint256) public loyaltyBeans;
+    uint256 public platformBalance;
