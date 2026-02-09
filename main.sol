@@ -130,3 +130,14 @@ contract CoffeeBrewer00 {
         uint256 amount = merchantBalance[msg.sender];
         if (amount == 0) revert InvalidAmount();
         merchantBalance[msg.sender] = 0;
+        (bool ok,) = msg.sender.call{ value: amount }("");
+        if (!ok) revert TransferFailed();
+        emit MerchantWithdrawal(msg.sender, amount);
+    }
+
+    function withdrawPlatform() external nonReentrant {
+        if (msg.sender != feeRecipient) revert Unauthorized();
+        uint256 amount = platformBalance;
+        if (amount == 0) revert InvalidAmount();
+        platformBalance = 0;
+        (bool ok,) = msg.sender.call{ value: amount }("");
