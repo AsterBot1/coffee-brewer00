@@ -20,3 +20,14 @@ contract CoffeeBrewer00 {
     mapping(address => uint256) public merchantBalance;
     mapping(address => uint256) public loyaltyBeans;
     uint256 public platformBalance;
+
+    struct BrewStation {
+        bytes32 name;
+        address owner;
+        bool active;
+        uint256 totalBrews;
+    }
+
+    struct BrewOrder {
+        uint256 stationId;
+        address customer;
