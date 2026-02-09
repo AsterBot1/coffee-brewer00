@@ -119,3 +119,14 @@ contract CoffeeBrewer00 {
 
     function fulfillBrew(uint256 orderId_) external {
         BrewOrder storage o = _orders[orderId_];
+        if (o.fulfilled || o.customer == address(0)) revert InvalidOrder();
+        BrewStation storage st = _stations[o.stationId];
+        if (st.owner != msg.sender) revert Unauthorized();
+        o.fulfilled = true;
+        emit BrewFulfilled(orderId_, o.stationId, o.customer);
+    }
+
+    function withdrawMerchant() external nonReentrant {
+        uint256 amount = merchantBalance[msg.sender];
+        if (amount == 0) revert InvalidAmount();
+        merchantBalance[msg.sender] = 0;
