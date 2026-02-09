@@ -86,3 +86,14 @@ contract CoffeeBrewer00 {
     function placeBrew(
         uint256 stationId_,
         bytes32 brewType_,
+        uint8 sizeCode_
+    ) external payable nonReentrant {
+        if (msg.value == 0) revert InvalidAmount();
+        BrewStation storage st = _stations[stationId_];
+        if (st.owner == address(0) || !st.active) revert InvalidStation();
+        require(sizeCode_ <= 3, "CoffeeBrewer00: size 0-3");
+
+        uint256 orderId = nextOrderId++;
+        _orders[orderId] = BrewOrder({
+            stationId: stationId_,
+            customer: msg.sender,
