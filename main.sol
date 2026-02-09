@@ -53,3 +53,14 @@ contract CoffeeBrewer00 {
     error TransferFailed();
 
     modifier nonReentrant() {
+        if (_locked != 0) revert ReentrantCall();
+        _locked = 1;
+        _;
+        _locked = 0;
+    }
+
+    constructor() {
+        feeBps = 87;
+        feeRecipient = msg.sender;
+        maxStations = 2047;
+        deployChainId = block.chainid;
