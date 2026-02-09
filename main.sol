@@ -152,3 +152,14 @@ contract CoffeeBrewer00 {
     }
 
     function getStation(uint256 stationId_) external view returns (
+        bytes32 name,
+        address owner,
+        bool active,
+        uint256 totalBrews
+    ) {
+        BrewStation storage s = _stations[stationId_];
+        return (s.name, s.owner, s.active, s.totalBrews);
+    }
+
+    function getOrder(uint256 orderId_) external view returns (
+        uint256 stationId,
